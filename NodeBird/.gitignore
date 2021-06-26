@@ -1,0 +1,8 @@
+# node모듈 제외
+node_modules
+
+# db 비밀번호 등의 정보때문에 제외
+config.json 
+
+# dotenv 
+.env
