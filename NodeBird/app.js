@@ -19,10 +19,16 @@ dotenv.config();
 // 시퀄라이즈 ORM  객체 참조하기
 const sequelize = require("./models/index.js").sequelize;
 
+// passport 패키지 참조
+const passport = require("passport");
+
 const app = express();
 
 // 시퀄라이즈 ORM 객체를 이용해 지정한 MySQL 연결 동기화 하기
 sequelize.sync();
+
+// 패스포트 설정
+passportConfig();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -38,6 +44,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// 요청(req 객체)에 passport 설정을 심는 미들웨어
+app.use(passport.initialize());
+
+// req.session 객체에 passport 정보를 저장한다.
+app.use(passport.session());
 
 // page
 app.use("/", pageRouter);
