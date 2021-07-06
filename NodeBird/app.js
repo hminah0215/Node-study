@@ -3,12 +3,15 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const passport = require("passport");
 
 // env 파일 참조
 const dotenv = require("dotenv");
 
 // page 라우터 참조
 const pageRouter = require("./routes/page");
+// auth 라우터 참조
+const authRouter = require("./routes/auth");
 
 // express-ejs-layouts 노드 패키지를 참조한다.
 const expressLayouts = require("express-ejs-layouts");
@@ -20,7 +23,7 @@ dotenv.config();
 const sequelize = require("./models/index.js").sequelize;
 
 // passport 패키지 참조
-const passport = require("passport");
+const passportConfig = require("./passport");
 
 const app = express();
 
@@ -53,6 +56,8 @@ app.use(passport.session());
 
 // page
 app.use("/", pageRouter);
+// auth
+app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
