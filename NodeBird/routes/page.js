@@ -13,11 +13,11 @@ router.use((req, res, next) => {
 });
 
 router.get("/profile", (req, res) => {
-  res.render("profile", { title: "내정보 = NodeBird" });
+  res.render("profile", { title: "내정보 - NodeBird" });
 });
 
 router.get("/join", (req, res) => {
-  res.render("join", { title: "회원가입 = NodeBird" });
+  res.render("join", { title: "회원가입 - NodeBird" });
 });
 
 router.get("/", (req, res, next) => {
