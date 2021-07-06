@@ -16,7 +16,13 @@ const expressLayouts = require("express-ejs-layouts");
 // env 파일 참조
 dotenv.config();
 
+// 시퀄라이즈 ORM  객체 참조하기
+const sequelize = require("./models/index.js").sequelize;
+
 const app = express();
+
+// 시퀄라이즈 ORM 객체를 이용해 지정한 MySQL 연결 동기화 하기
+sequelize.sync();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
