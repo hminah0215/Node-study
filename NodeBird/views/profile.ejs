@@ -1,12 +1,12 @@
-<%- include("layout") -%>
+
 
     <div class="timeline">
       <div class="followings half">
         <h2>팔로잉 목록</h2>
         <% if(user.Followings){ %>
-          <% for(following=0; following < user.Followings; following++){ %>
+          <% for(following=0; following < user.Followings.length; following++){ %>
             <div>
-              <%= following.nick %>
+              <%=following.nick%>
             </div>
             <% } %>
               <% } %>
@@ -15,9 +15,9 @@
       <div class="followers half">
         <h2>팔로워 목록</h2>
         <% if(user.Followers){ %>
-          <% for(follower=0; follower < user.Followers; follower++){ %>
+          <% for(follower=0; follower < user.Followers.length; follower++){ %>
             <div>
-              <%= follower.nick %>
+              <%=follower.nick%>
             </div>
             <% } %>
               <% } %>

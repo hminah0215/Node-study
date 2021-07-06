@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 페이지</title>
+  </head>
+  <body>
+    <h1>로그인 페이지</h1>
+    <form action="/auth/login" method="POST">
+
+      <label>
+        이메일
+        <input type="email" name="email" />
+      </label>
+      <label>
+        비밀번호
+        <input type="password" name="password" />
+      </label>
+      <button type="submit">로그인</button>
+      <a href="/auth/kakao/kakao">카카오톡 로그인</a>
+    </form>
+  </body>
+</html>

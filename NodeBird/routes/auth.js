@@ -17,6 +17,7 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
   try {
     // 기본에 같은 이메일로 가입한 사용자가 있는지 조회
     const exUser = await User.findOne({ where: { email } });
+
     if (exUser) {
       // 있다면, 회원가입 페이지로 되돌려 보낸다. 이때 주소뒤에 에러를 쿼리스트링으로 표시
       return res.redirect("/join?error=exist");
@@ -31,6 +32,7 @@ router.post("/join", isNotLoggedIn, async (req, res, next) => {
       nick,
       password: hash,
     });
+    console.log("회원가입 성공!!!!!!!!!!!!!!!");
     return res.redirect("/");
   } catch (error) {
     console.error(error);
@@ -53,10 +55,12 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
 
     // 전략이 성공하거나 실패하면!
     return req.login(user, (loginError) => {
+      console.log("로그인정보 있다", user);
       if (loginError) {
         console.error(loginError);
         return next(loginError);
       }
+      console.log("로그인 성공했따!!!!!!!!!!!!!!!");
       return res.redirect("/");
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
@@ -71,6 +75,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
   // req.session 객체의 내용을 제거한다.
   req.session.destroy();
 
+  console.log("로그아웃 성공!!!!!!!!!!!!!!");
   // 세션정보를 모두 지운 후 메인 페이지로 돌아감
   res.redirect("/");
 });

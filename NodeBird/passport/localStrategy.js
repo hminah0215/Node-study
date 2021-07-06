@@ -28,6 +28,7 @@ module.exports = () => {
             const result = await bcrypt.compare(password, exUser.password);
 
             if (result) {
+              console.log("비밀번호가 일치합니다. 로그인 성공");
               // 비밀번호가 일치하면 done 함수의 두번째 인수로 사용자 정보를 넣어 보낸다.
               done(null, exUser);
             } else {

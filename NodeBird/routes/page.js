@@ -5,7 +5,7 @@ const router = express.Router();
 // 라우터용 미들웨어
 // res.locals로 값을 설정하는 이유? 각 변수를 모든 템플릿 엔진에서 공통으로 사용하기 때문
 router.use((req, res, next) => {
-  res.locals.user = null;
+  res.locals.user = req.user;
   res.locals.followerCount = 0;
   res.locals.followingCount = 0;
   res.locals.followerIdList = [];
