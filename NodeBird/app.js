@@ -1,22 +1,22 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
 // env 파일 참조
 const dotenv = require("dotenv");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+// page 라우터 참조
+const pageRouter = require("./routes/page");
 
 // express-ejs-layouts 노드 패키지를 참조한다.
-var expressLayouts = require("express-ejs-layouts");
+const expressLayouts = require("express-ejs-layouts");
 
 // env 파일 참조
 dotenv.config();
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -33,8 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+// page
+app.use("/", pageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
