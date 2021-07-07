@@ -17,6 +17,7 @@ router.get("/test", async (req, res, next) => {
       if (tokenResult.data && tokenResult.data.code === 200) {
         // 세션에 토큰을 저장한다
         req.session.jwt = tokenResult.data.token;
+        //console.log("세션에 토큰저장=====>", req.session.jwt);
       } else {
         // 토큰 발급 실패면 발급실패사유를 보낸다
         return res.json(tokenResult.data);
