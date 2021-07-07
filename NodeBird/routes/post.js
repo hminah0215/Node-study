@@ -2,6 +2,7 @@ const express = require("express");
 
 // 파일 업로드 처리를 위한 multer 패키지 참조
 const multer = require("multer");
+
 const path = require("path");
 const fs = require("fs");
 
@@ -24,6 +25,8 @@ const upload = multer({
     },
     filename(req, file, cb) {
       const ext = path.extname(file.originalname);
+
+      // /img/burger1625634021496.jpg 이런식으로 db에 저장됨
       cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
   }),
