@@ -43,7 +43,7 @@ router.post("/token", async (req, res) => {
       process.env.JWT_SECRET,
       {
         // sign의 세번째 인수 -> 유효기간,발급자 등의 정보를 설정
-        expiresIn: "10m",
+        expiresIn: "1m",
         issuer: "nodebird",
       }
     );
