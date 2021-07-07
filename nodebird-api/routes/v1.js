@@ -22,7 +22,7 @@ router.post("/token", async (req, res) => {
         attribute: ["nick", "id"],
       },
     });
-    console.log("domain정보 ===============>", domain);
+    // console.log("domain정보 ===============>", domain);
 
     // 등록되지않은 도메인이면!
     if (!domain) {
