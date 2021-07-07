@@ -55,7 +55,7 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
 
     // 전략이 성공하거나 실패하면!
     return req.login(user, (loginError) => {
-      console.log("로그인정보 있다", user);
+      // console.log("로그인정보 있다", user);
       if (loginError) {
         console.error(loginError);
         return next(loginError);
