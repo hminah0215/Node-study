@@ -1,6 +1,8 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
+const { Post, User } = require("../models");
+
 const router = express.Router();
 
 // 라우터용 미들웨어
@@ -27,12 +29,27 @@ router.get("/join", (req, res) => {
   res.render("join", { title: "회원가입 - NodeBird" });
 });
 
-router.get("/", (req, res, next) => {
-  const twits = [];
-  res.render("main", {
-    title: "NodeBird",
-    twits,
-  });
+router.get("/", async (req, res, next) => {
+  try {
+    // db에서 게시글을 작성자의 아이디,닉네임을 join 해서 조회한다.
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        attributes: ["id", "nick"],
+      },
+      // 게시글의 순서는 최신순으로 정렬
+      order: [["createdAt", "DESC"]],
+    });
+
+    // 조회한 결과를 twits에 담는다.
+    res.render("main", {
+      title: "NodeBird",
+      twits: posts,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 });
 
 module.exports = router;
