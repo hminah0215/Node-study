@@ -10,6 +10,8 @@ const ejs = require("ejs");
 const dotenv = require("dotenv");
 dotenv.config();
 
+// jwt토큰 라우터 참조
+const v1 = require("./routes/v1");
 // auth 라우터 참조
 const authRouter = require("./routes/auth");
 // index 라우터 참조
@@ -70,6 +72,8 @@ app.use(passport.initialize());
 // req.session 객체에 passport 정보를 저장, deserializeUser가 실행되는 곳
 app.use(passport.session());
 
+// v1
+app.use("/v1", v1);
 // index
 app.use("/", indexRouter);
 // auth
