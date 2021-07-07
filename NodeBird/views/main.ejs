@@ -26,25 +26,25 @@ for문에서, 렌더링시 twits 배열안의 요소들을 게시글로 만듬 -
           <input type="text" name="hashtag" placeholder="태그 검색">
           <button class="btn">검색</button>
         </form>
-        <% for(var twit=0; twit < twits.length; twit++){ %>
+        <% for(var i=0; i < twits.length ; i++){ %>
           <div class="twit">
-            <input type="hidden" value="<%=twit.User.id%>" class="twit-user-id">
-            <input type="hidden" value="<%=twit.id%>" class="twit-id">
+            <input type="hidden" value="<%=twits[i].User.id%>" class="twit-user-id">
+            <input type="hidden" value="<%=twits[i].id%>" class="twit-id">
             <div class="twit-author">
-              <%=twit.User.nick%>
+              <%=twits[i].User.nick%>
             </div>
 
             <!-- 나의 팔로워 아이디 목록에 게시글 작성자의 아이디가 없으면 팔로우 버튼을 보여주기 위한 구문
             또한, 게시글 작성자가 나인 경우 나를 팔로우 할 수 없게 함! -->
-            <% if((!followerIdList.includes(twit.User.id)) && (twit.User.id != user.id )){ %>
+            <% if((!followerIdList.includes(twits[i].User.id)) && (twits[i].User.id != user.id )){ %>
               <button class="twit-follow">팔로우하기</button>
               <% } %>
                 <div class="twit-content">
-                  <%=twit.content%>
+                  <%=twits[i].content%>
                 </div>
                 <!-- 트윗 이미지가 있으면 보여준다 -->
-                <% if (twit.img.length> 0){ %>
-                  <div class="twit-img"><img src="<%=twit.img%>" alt="섬네일"></div>
+                <% if (twits[i].img.length> 0){ %>
+                  <div class="twit-img"><img src="<%=twits[i].img%>" alt="섬네일"></div>
                   <% } %>
           </div>
           <% } %>
