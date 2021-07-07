@@ -14,16 +14,15 @@ module.exports = () => {
   passport.serializeUser((user, done) => {
     // done 함수의 첫 번째 인수는 에러 발생시 사용, 두번째 인수에는 저장하고 싶은 데이터를 넣음
     // 사용자 정보를 모두 저장하면 용량이 커지므로, 사용자의 아이디만 저장하라고 한 것
-    console.log("사용자 정보 출력!!!", user);
-    console.log("사용자 id = ", user.id);
+
+    console.log("serializeUser 사용자 id = ", user.id);
     done(null, user.id);
   });
 
   // deserializeUser는 매 요청시마다 실행된다! passpoet.session 미들웨어가 이 메서드를 호출함.
   // serializeUser의 done의 두번 째 인수로 넣었던 데이터가 deserializeUser는의 매개변수가 된다. (사용자 아이디)
   passport.deserializeUser((id, done) => {
-    console.log("사용자 정보 출력!!!", user);
-    console.log("사용자 id = ", user.id);
+    console.log("deserializeUser 사용자 id = ", id);
     // serializeUser에서 세션에 저장했던 아이디를 받아 db에서 사용자 정보를 조회하고, 그 정보를 req.user에 저장함!
     // 그러므로 req.user를 통해서 로그인 한 사용자의 정보를 가져올 수 있다.
     User.findOne({ where: { id } })
