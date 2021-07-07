@@ -2,6 +2,7 @@
 // 사용하지 않는 미들웨어는 다 빼고 최소한으로 작성
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const dotenv = require("dotenv");
