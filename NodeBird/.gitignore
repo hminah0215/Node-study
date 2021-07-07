@@ -6,3 +6,10 @@ config.json
 
 # dotenv 
 .env
+
+# ejs 연습파일들
+views/join3.ejs
+views/layout2.ejs
+views/layout3.ejs
+views/login2.ejs
+views/main3.ejs
