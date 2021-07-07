@@ -22,10 +22,28 @@ module.exports = () => {
   // deserializeUser는 매 요청시마다 실행된다! passpoet.session 미들웨어가 이 메서드를 호출함.
   // serializeUser의 done의 두번 째 인수로 넣었던 데이터가 deserializeUser는의 매개변수가 된다. (사용자 아이디)
   passport.deserializeUser((id, done) => {
+    //
     console.log("deserializeUser 사용자 id = ", id);
     // serializeUser에서 세션에 저장했던 아이디를 받아 db에서 사용자 정보를 조회하고, 그 정보를 req.user에 저장함!
     // 그러므로 req.user를 통해서 로그인 한 사용자의 정보를 가져올 수 있다.
-    User.findOne({ where: { id } })
+    User.findOne({
+      where: { id },
+
+      // 사용자 정보 조회시 팔로잉 목록과 팔로워 목록도 같이 조회한다.
+      include: [
+        {
+          model: User,
+          attributes: ["id", "nick"],
+          as: "Followers",
+        },
+        {
+          model: User,
+          // include에서 attributes을 지정하는 이유? 실수로 비밀번호를 조회하는 것을 방지하려고
+          attributes: ["id", "nick"],
+          as: "Followings",
+        },
+      ],
+    })
       .then((user) => done(null, user))
       .catch((err) => done(err));
   });

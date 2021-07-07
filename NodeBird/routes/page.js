@@ -1,7 +1,7 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
-const { Post, User } = require("../models");
+const { Post, User, Hashtag } = require("../models");
 
 const router = express.Router();
 
@@ -12,9 +12,13 @@ router.use((req, res, next) => {
   console.log("req.user!!!!!", req.user);
   console.log("+===============================================+");
   res.locals.user = req.user;
-  res.locals.followerCount = 0;
-  res.locals.followingCount = 0;
-  res.locals.followerIdList = [];
+
+  // 로그인 한 경우 req.user가 이미 존재하므로 팔로우,팔로잉 숫자 표시 및 팔로우 버튼 표시
+  res.locals.followerCount = req.user ? req.user.Followers.length : 0;
+  res.locals.followingCount = req.user ? req.user.Followings.length : 0;
+  // 팔로워 아이디 리스트에서 게시글 작성자의 아이디가 존재하지 않으면 팔로우 버튼을 보여준다.
+  res.locals.followerIdList = req.user ? req.user.Followings.map((f) => f.id) : [];
+
   console.log("+===============================================+");
   console.log("회원정보!!!!!", res.locals.user);
   console.log("+===============================================+");
@@ -49,6 +53,32 @@ router.get("/", async (req, res, next) => {
   } catch (err) {
     console.error(err);
     next(err);
+  }
+});
+
+// 해시태그 검색 라우터
+// 쿼리스트링방식으로 해시태그 이름을 받고, 해시태그 값이 없으면 메인페이지로 돌려보냄
+router.get("/hashtag", async (req, res, next) => {
+  const query = req.query.hashtag;
+  if (!query) {
+    return res.redirect("/");
+  }
+  try {
+    const hashtag = await Hashtag.findOne({ where: { title: query } });
+    let posts = [];
+    if (hashtag) {
+      // 해시태그가 있다면 모든 게시글을 가져오고, 가져올때 작성자 정보를 합친다.
+      posts = await hashtag.getPosts({ include: [{ model: User }] });
+    }
+
+    // 조회 후, 메인페이지를 렌더링 하면서 전체 게시글 대신 조회된 게시글만 twits에 담는다.
+    return res.render("main", {
+      title: `${query} | NodeBird`,
+      twits: posts,
+    });
+  } catch (error) {
+    console.error(error);
+    return next(error);
   }
 });
 

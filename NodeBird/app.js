@@ -15,6 +15,11 @@ dotenv.config();
 const pageRouter = require("./routes/page");
 // auth 라우터 참조
 const authRouter = require("./routes/auth");
+// post 라우터 참조
+const postRouter = require("./routes/post");
+// user 라우터 참조
+const userRouter = require("./routes/user");
+
 // 시퀄라이즈 ORM  객체 참조하기
 const { sequelize } = require("./models");
 // passport 패키지 참조
@@ -58,6 +63,10 @@ app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, "public")));
 
+// 업로드한 이미지를 제공할 라우터(/img)도 express.static 미들웨어로 uploads 폴더와 연결한다.
+// express.static 여러번 쓸 수 있음!
+app.use("/img", express.static(path.join(__dirname, "uploads")));
+
 // passport를 사용하기 위해서 session이 필요
 app.use(
   session({
@@ -84,6 +93,10 @@ app.use(passport.session());
 app.use("/", pageRouter);
 // auth
 app.use("/auth", authRouter);
+// post
+app.use("/post", postRouter);
+// user
+app.use("/user", userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
